@@ -11,138 +11,155 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# ── Brand styles (wearesweep.com) ─────────────────────────────────────────────
+# ── Brand styles (inspired by Sweep SoMe deck) ────────────────────────────────
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
 
-    /* Global */
     html, body, [class*="css"] {
-        font-family: Georgia, serif;
-        background-color: #ffffff;
-        color: #222222;
+        font-family: 'Space Grotesk', sans-serif;
+        background-color: #180008;
+        color: #ffffff;
     }
     #MainMenu {visibility: hidden;}
     footer     {visibility: hidden;}
     header     {visibility: hidden;}
 
-    /* Constrain width for a clean centered layout */
     .block-container {
-        max-width: 780px;
-        padding-top: 3rem;
-        padding-bottom: 3rem;
+        max-width: 820px;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
     }
 
-    /* Wordmark / logo area */
+    /* ── Wordmark top ── */
     .sweep-wordmark {
-        font-family: 'Roboto', sans-serif;
-        font-size: 0.8rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.7rem;
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.25em;
         text-transform: uppercase;
-        color: #330000;
+        color: #CC99FF;
         margin-bottom: 3rem;
     }
 
-    /* Hero headline */
+    /* ── Giant headline ── */
     .sweep-headline {
-        font-family: 'Roboto', sans-serif;
-        font-size: 2.4rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 5.5rem;
         font-weight: 700;
-        color: #330000;
-        line-height: 1.15;
-        margin-bottom: 0.5rem;
+        color: #33FF66;
+        line-height: 0.95;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.03em;
     }
 
-    /* Subline */
+    /* ── Subline ── */
     .sweep-subline {
-        font-family: Georgia, serif;
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 1rem;
-        color: #555555;
-        margin-bottom: 2.5rem;
-        line-height: 1.6;
+        color: rgba(255,255,255,0.6);
+        margin-bottom: 3rem;
+        line-height: 1.65;
+        max-width: 520px;
     }
 
-    /* Section label */
+    /* ── Section label ── */
     .sweep-label {
-        font-family: 'Roboto', sans-serif;
-        font-size: 0.72rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.65rem;
         font-weight: 700;
-        letter-spacing: 0.15em;
+        letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: #330000;
-        margin-bottom: 0.4rem;
+        color: #CC99FF;
+        margin-bottom: 0.6rem;
     }
 
-    /* File uploader */
+    /* ── File uploader ── */
     [data-testid="stFileUploader"] {
-        border: 1.5px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 0.5rem;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 4px;
+        padding: 0.3rem;
+        background-color: #240010;
     }
 
-    /* Run button — white bg, burgundy text, pill shape (Sweep style) */
+    /* ── Run button — neon green ── */
     div[data-testid="stButton"] > button {
-        background-color: #ffffff !important;
-        color: #330000 !important;
-        border: 2px solid #330000 !important;
-        border-radius: 250px !important;
-        font-family: 'Roboto', sans-serif !important;
-        font-weight: 700 !important;
-        font-size: 0.85rem !important;
-        letter-spacing: 0.08em !important;
-        text-transform: uppercase !important;
-        padding: 0.55rem 2.2rem !important;
-        transition: all 0.2s ease !important;
-    }
-    div[data-testid="stButton"] > button:hover {
-        background-color: #330000 !important;
-        color: #cc99ff !important;
-    }
-
-    /* Download button — blue accent */
-    div[data-testid="stDownloadButton"] > button {
-        background-color: #0080FF !important;
-        color: #ffffff !important;
+        background-color: #33FF66 !important;
+        color: #180008 !important;
         border: none !important;
         border-radius: 250px !important;
-        font-family: 'Roboto', sans-serif !important;
+        font-family: 'Space Grotesk', sans-serif !important;
         font-weight: 700 !important;
-        font-size: 0.85rem !important;
-        letter-spacing: 0.08em !important;
+        font-size: 0.8rem !important;
+        letter-spacing: 0.15em !important;
         text-transform: uppercase !important;
-        padding: 0.55rem 2.2rem !important;
+        padding: 0.65rem 2.4rem !important;
+    }
+    div[data-testid="stButton"] > button:hover {
+        background-color: #CC99FF !important;
+        color: #180008 !important;
+    }
+
+    /* ── Download button ── */
+    div[data-testid="stDownloadButton"] > button {
+        background-color: transparent !important;
+        color: #33FF66 !important;
+        border: 1.5px solid #33FF66 !important;
+        border-radius: 250px !important;
+        font-family: 'Space Grotesk', sans-serif !important;
+        font-weight: 700 !important;
+        font-size: 0.8rem !important;
+        letter-spacing: 0.15em !important;
+        text-transform: uppercase !important;
+        padding: 0.65rem 2.4rem !important;
     }
     div[data-testid="stDownloadButton"] > button:hover {
-        background-color: #0066cc !important;
+        background-color: #33FF66 !important;
+        color: #180008 !important;
     }
 
-    /* Result area */
-    .result-box {
-        border-left: 3px solid #330000;
-        padding-left: 1.5rem;
-        margin-top: 2rem;
-    }
-
-    /* Divider */
-    hr { border-color: #f0f0f0; margin: 2.5rem 0; }
-
-    /* Selectbox */
+    /* ── Selectbox label ── */
     [data-testid="stSelectbox"] label {
-        font-family: 'Roboto', sans-serif;
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: #330000;
+        font-family: 'Space Grotesk', sans-serif !important;
+        font-size: 0.65rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.22em !important;
+        text-transform: uppercase !important;
+        color: #CC99FF !important;
     }
 
-    /* Info box */
-    [data-testid="stAlert"] {
-        border-radius: 6px;
-        border: 1px solid #e0e0e0;
-        background-color: #fafafa;
-        color: #222;
+    /* ── Result label pill ── */
+    .result-label {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #180008;
+        background-color: #33FF66;
+        display: inline-block;
+        padding: 0.3rem 0.9rem;
+        border-radius: 100px;
+        margin-bottom: 1.5rem;
+    }
+
+    /* ── Divider ── */
+    hr {
+        border-color: rgba(255,255,255,0.08);
+        margin: 2.5rem 0;
+    }
+
+    /* ── Footer ── */
+    .sweep-footer {
+        margin-top: 5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        text-align: left;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.25);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -153,15 +170,18 @@ def load_prompt() -> str:
     prompt_path = Path(__file__).parent / "sweep-brief-validator-prompt.md"
     return prompt_path.read_text(encoding="utf-8")
 
-# ── Wordmark ──────────────────────────────────────────────────────────────────
+# ── Header ────────────────────────────────────────────────────────────────────
 st.markdown('<div class="sweep-wordmark">Sweep Agency</div>', unsafe_allow_html=True)
 
-# ── Headline ──────────────────────────────────────────────────────────────────
-st.markdown('<div class="sweep-headline">Brief Validator</div>', unsafe_allow_html=True)
+st.markdown("""
+<div class="sweep-headline">Brief<br>Validator</div>
+""", unsafe_allow_html=True)
+
 st.markdown(
-    '<div class="sweep-subline">Upload a presentation PDF. '
-    'Claude reads every slide and scores it across 12 dimensions '
-    'of Sweep\'s creative and strategic standards.</div>',
+    '<div class="sweep-subline">'
+    'Upload a presentation PDF. Claude reads every slide and scores it '
+    'across 12 dimensions of Sweep\'s creative and strategic standards.'
+    '</div>',
     unsafe_allow_html=True,
 )
 
@@ -176,17 +196,17 @@ uploaded_file = st.file_uploader(
     help="PDF up to ~50 MB",
 )
 
-st.markdown("<div style='margin-top:1.5rem'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-top:1.8rem'></div>", unsafe_allow_html=True)
 
 # ── Type override ─────────────────────────────────────────────────────────────
 TYPE_OPTIONS = {
-    "Auto-detect (recommended)":      None,
-    "A — Campaign Pitch":             "A",
-    "B — Brand Strategy":             "B",
+    "Auto-detect (recommended)":       None,
+    "A — Campaign Pitch":              "A",
+    "B — Brand Strategy":              "B",
     "C — Creative Strategy + Concept": "C",
-    "D — Brand Identity":             "D",
-    "E — Communication Platform":     "E",
-    "F — Employer Brand":             "F",
+    "D — Brand Identity":              "D",
+    "E — Communication Platform":      "E",
+    "F — Employer Brand":              "F",
 }
 type_label = st.selectbox(
     "Type override",
@@ -195,7 +215,7 @@ type_label = st.selectbox(
 )
 selected_type = TYPE_OPTIONS[type_label]
 
-st.markdown("<div style='margin-top:2rem'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-top:2.2rem'></div>", unsafe_allow_html=True)
 
 # ── Run ───────────────────────────────────────────────────────────────────────
 if uploaded_file:
@@ -205,14 +225,12 @@ if uploaded_file:
     run = st.button("Run Validator →")
 
     if run:
-        if selected_type:
-            override_note = (
-                f"\n\n**USER TYPE OVERRIDE:** Skip Stage 1 classification. "
-                f"Treat this deck as **Type {selected_type}** and proceed directly "
-                f"to Stage 2 scoring using Type {selected_type} weights."
-            )
-        else:
-            override_note = ""
+        override_note = (
+            f"\n\n**USER TYPE OVERRIDE:** Skip Stage 1 classification. "
+            f"Treat this deck as **Type {selected_type}** and proceed directly "
+            f"to Stage 2 scoring using Type {selected_type} weights."
+            if selected_type else ""
+        )
 
         user_message = (
             "Please validate this presentation using the Sweep Brief Validator. "
@@ -226,14 +244,13 @@ if uploaded_file:
         try:
             client = anthropic.Anthropic(api_key=st.secrets["ANTHROPIC_API_KEY"])
         except KeyError:
-            st.error("ANTHROPIC_API_KEY not found in secrets. Add it in Streamlit Cloud → App settings → Secrets.")
+            st.error("ANTHROPIC_API_KEY not found. Add it in Streamlit Cloud → App settings → Secrets.")
             st.stop()
 
         validator_prompt = load_prompt()
 
         st.divider()
-        st.markdown('<div class="sweep-label">Validation Report</div>', unsafe_allow_html=True)
-        st.markdown("<div style='margin-top:1rem'></div>", unsafe_allow_html=True)
+        st.markdown('<div class="result-label">Validation Report</div>', unsafe_allow_html=True)
 
         result_placeholder = st.empty()
         full_response = ""
@@ -280,17 +297,13 @@ if uploaded_file:
 
 else:
     st.markdown(
-        "<p style='color:#aaaaaa; font-size:0.9rem;'>"
+        "<p style='color:rgba(255,255,255,0.3); font-size:0.9rem;'>"
         "Typical decks take 60–90 seconds to score.</p>",
         unsafe_allow_html=True,
     )
 
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.markdown(
-    "<div style='margin-top:4rem; padding-top:1.5rem; border-top:1px solid #f0f0f0;"
-    "text-align:center; font-size:0.75rem; color:#bbbbbb; letter-spacing:0.1em;"
-    "text-transform:uppercase; font-family:Roboto,sans-serif;'>"
-    "Sweep Agency · Brief Validator v1.0 · Internal use only"
-    "</div>",
+    '<div class="sweep-footer">Sweep Agency · Brief Validator v1.0 · Internal use only</div>',
     unsafe_allow_html=True,
 )

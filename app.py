@@ -1,7 +1,12 @@
 import streamlit as st
 import anthropic
 import base64
+import re
+import time
+from datetime import datetime
 from pathlib import Path
+import gspread
+from google.oauth2.service_account import Credentials
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -170,6 +175,35 @@ def load_prompt() -> str:
     prompt_path = Path(__file__).parent / "sweep-brief-validator-prompt.md"
     return prompt_path.read_text(encoding="utf-8")
 
+# ── Google Sheets logging ──────────────────────────────────────────────────────
+SHEET_ID = "1-m7J24Qzz3QoC7Sm6mP_OOKiAuAOUkzZJX403OxpHUE"
+
+def extract_score(text: str) -> str:
+    """Pull the first percentage that looks like a total score from the report."""
+    match = re.search(r'\b(\d{1,3})%', text)
+    return f"{match.group(1)}%" if match else "—"
+
+def log_to_sheet(filename: str, size_mb: float, type_used: str, score: str, duration: float):
+    """Append one row to the Sweep Validator Log sheet. Fails silently."""
+    try:
+        creds = Credentials.from_service_account_info(
+            st.secrets["gcp_service_account"],
+            scopes=["https://www.googleapis.com/auth/spreadsheets"],
+        )
+        gc = gspread.authorize(creds)
+        sh = gc.open_by_key(SHEET_ID)
+        ws = sh.sheet1
+        ws.append_row([
+            datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
+            filename,
+            round(size_mb, 1),
+            type_used,
+            score,
+            round(duration),
+        ])
+    except Exception:
+        pass  # Never block the user if logging fails
+
 # ── Header ────────────────────────────────────────────────────────────────────
 st.markdown('<div class="sweep-wordmark">Sweep Agency</div>', unsafe_allow_html=True)
 
@@ -240,6 +274,7 @@ if uploaded_file:
 
         pdf_bytes  = uploaded_file.read()
         pdf_base64 = base64.standard_b64encode(pdf_bytes).decode("utf-8")
+        start_time = time.time()
 
         try:
             client = anthropic.Anthropic(api_key=st.secrets["ANTHROPIC_API_KEY"])
@@ -285,6 +320,12 @@ if uploaded_file:
         except anthropic.APIError as e:
             st.error(f"API error: {e}")
             st.stop()
+
+        # ── Log to Google Sheet ────────────────────────────────────────────
+        duration  = time.time() - start_time
+        score     = extract_score(full_response)
+        type_used = type_label if selected_type else "Auto-detect"
+        log_to_sheet(uploaded_file.name, size_mb, type_used, score, duration)
 
         st.divider()
         fname = uploaded_file.name.replace(".pdf", "").replace(" ", "_")

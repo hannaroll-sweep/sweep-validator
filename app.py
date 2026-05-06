@@ -179,9 +179,16 @@ def load_prompt() -> str:
 SHEET_ID = "1-m7J24Qzz3QoC7Sm6mP_OOKiAuAOUkzZJX403OxpHUE"
 
 def extract_score(text: str) -> str:
-    """Pull the first percentage that looks like a total score from the report."""
-    match = re.search(r'\b(\d{1,3})%', text)
-    return f"{match.group(1)}%" if match else "—"
+    """Extract the total score from the validator report (e.g. '38/51 = 74.5%')."""
+    # Try to find the full fraction + percentage pattern near TOTAL
+    match = re.search(r'(\d+/\d+)\s*=\s*(\d+(?:\.\d+)?%)', text)
+    if match:
+        return f"{match.group(1)} = {match.group(2)}"
+    # Fallback: any percentage before an arrow
+    match = re.search(r'(\d+(?:\.\d+)?%)\s*[→—]', text)
+    if match:
+        return match.group(1)
+    return "—"
 
 def log_to_sheet(filename: str, size_mb: float, type_used: str, score: str, duration: float):
     """Append one row to the Sweep Validator Log sheet. Fails silently."""
